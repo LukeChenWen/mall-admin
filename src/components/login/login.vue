@@ -27,19 +27,21 @@ export default {
   methods: {
     // 登录请求
     handlerLogin () {
-      this.$http.get('http://localhost:3000/user/', {
-        params: { name: this.formdata.username }
-      }).then((res) => {
-        console.log(res.data[0].name + '--' + res.data[0].password + '--' + res.data[0].id)
-        if (res.status === 200) {
-          this.$message({
-            showClose: true,
-            message: '登录成功',
-            type: 'success'
-          })
-          this.$router.push({ name: 'Home' })
-        }
-      })
+      this.$http.get('http://localhost:3000/user/', { params: { name: this.formdata.username } })
+        .then((res) => {
+          console.log(res.data)
+          if (res.data[0].name === this.formdata.username && res.status === 200) {
+            this.$message({
+              showClose: true,
+              message: '登录成功',
+              type: 'success'
+            })
+            // 这里暂时用接收到的密码作为token值存储到本地存储
+            // 其他页面在加载之前的时候就可以到localStorage里面通过key=token取到token值,从而判断用户是否登录
+            localStorage.setItem('token', res.data[0].password)
+            this.$router.push({ name: 'home' })
+          }
+        })
         .catch((err) => {
           this.$message({
             showClose: true,

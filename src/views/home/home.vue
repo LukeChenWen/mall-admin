@@ -7,11 +7,12 @@
               <img src="../../assets/img/officepet.png" alt="无法显示图片" />
           </div>
         </el-col>
-        <el-col :span="18" class="top-title">
+        <el-col :span="16" class="top-title">
           <h3>电商后台管理系统</h3>
         </el-col>
-        <el-col :span="2">
+        <el-col :span="4">
           <div class="top-loginout">
+            <span>用户：{{name}}</span>&nbsp;
             <a class="loginout" href="#" @click.prevent="quit()">退出</a>
           </div>
         </el-col>
@@ -20,14 +21,14 @@
     <el-container>
       <el-aside class="home-aside" width="200px">
         <!-- 菜单导航 -->
-        <el-menu unique-opened="true">
+        <el-menu :unique-opened="true" :router="true">
           <!-- 1 -->
           <el-submenu index="1">
             <template slot="title">
               <i class="el-icon-user"></i>
               <span>用户管理</span>
             </template>
-              <el-menu-item index="1-1">
+              <el-menu-item index="users">
                 <i class="el-icon-ticketsn"></i>用户列表
               </el-menu-item>
           </el-submenu>
@@ -82,19 +83,27 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-      <el-main class="home-main">Main</el-main>
+      <el-main class="home-main">
+        <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
 
 <script>
 export default {
-  beforeCreate () {
+  data () {
+    return {
+      name: ''
+    }
+  },
+  mounted () {
   // 获取token判断是否登录
-    const token = localStorage.getItem('token')
+    const token = JSON.parse(localStorage.getItem('token'))
+    this.name = token.username
     // 如果没有token,跳回登录
     if (!token) {
-      this.$router.replace({ name: 'login' })
+      this.$router.push({ name: 'login' })
     }
     // 如果有,继续渲染组件
   },
@@ -126,14 +135,13 @@ export default {
 
   .home-main {
     background-color: #e9eef3;
+    height: 100%;
   }
   .top-img>img{
     height: 3.75rem;
   }
   .top-title{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
   }
   .top-loginout{
     text-align: end;

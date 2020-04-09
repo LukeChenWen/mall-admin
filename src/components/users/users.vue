@@ -1,11 +1,7 @@
 <template>
   <el-card class="box-card">
     <!-- 面包屑 -->
-    <el-breadcrumb separator="/">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item><a href="/">用户管理</a></el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <breadcrumb :breadlist="breadlist"></breadcrumb>
     <!-- 搜索框 -->
     <el-row class="search-row">
       <el-col>
@@ -123,10 +119,16 @@
 </template>
 
 <script>
+import breadcrumb from '../common/breadcrumb/breadcrumb.vue'
 export default {
+  components: {
+    breadcrumb
+  },
   data () {
     return {
       searchInput: '',
+      // 面包屑列表
+      breadlist: ['首页', '用户管理', '用户列表'],
       userList: [],
       // 分页相关数据
       total: 1,

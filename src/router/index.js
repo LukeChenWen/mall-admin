@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Login from '@/components/login/login.vue'
 import Home from '@/views/home/home.vue'
 import Users from '@/components/users/users.vue'
+import AuthList from '../components/authority/auth-list.vue'
+import RoleList from '../components/authority/role-list.vue'
 
 Vue.use(VueRouter)
 
@@ -21,6 +23,16 @@ const routes = [
         name: 'users',
         path: '/users',
         component: Users
+      },
+      {
+        name: 'authList',
+        path: '/authList',
+        component: AuthList
+      },
+      {
+        name: 'roleList',
+        path: '/roleList',
+        component: RoleList
       }
     ]
   }

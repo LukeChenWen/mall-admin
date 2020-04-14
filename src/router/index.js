@@ -10,6 +10,8 @@ import GoodsList from '@/components/goods/goods-list.vue'
 import AddGoods from '@/components/goods/add-goods.vue'
 import CateParams from '@/components/goods/cate-params.vue'
 import GoodsCategory from '@/components/goods/goods-category.vue'
+import OrderList from '@/components/orders/order-list.vue'
+import DataReport from '@/components/dataStatistics/data-report.vue'
 
 Vue.use(VueRouter)
 
@@ -58,6 +60,16 @@ const routes = [
         name: 'goodsCategory',
         path: '/goodsCategory',
         component: GoodsCategory
+      },
+      {
+        name: 'orderList',
+        path: '/orderList',
+        component: OrderList
+      },
+      {
+        name: 'dataReport',
+        path: '/dataReport',
+        component: DataReport
       }
     ]
   }

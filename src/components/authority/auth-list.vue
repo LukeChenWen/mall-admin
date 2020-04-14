@@ -39,7 +39,7 @@ export default {
   methods: {
     async getAuthlist () {
       const res = await this.$http.get('/auth')
-      console.log(res.data)
+      // console.log(res.data)
       this.authlist = res.data
     }
   }

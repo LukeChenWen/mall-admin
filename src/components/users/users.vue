@@ -281,14 +281,14 @@ export default {
     },
     // 搜索用户
     searchUser () {
-      this.$http.get().then((res) => {
+      this.$http.get('/user').then((res) => {
         var arr = []
         var list = res.data
-        for (var i = 0; i < list.length; i++) {
-          if (list[i].name.indexOf(this.searchInput) >= 0) {
-            arr.push(list[i])
+        list.forEach(item => {
+          if (item.username.indexOf(this.searchInput) >= 0) {
+            arr.push(item)
           }
-        }
+        })
         this.userList = arr
       })
     },

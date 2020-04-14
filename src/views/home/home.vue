@@ -22,63 +22,14 @@
       <el-aside class="home-aside" width="200px">
         <!-- 菜单导航 -->
         <el-menu :unique-opened="true" :router="true">
-          <!-- 1 -->
-          <el-submenu index="1">
+          <!-- 菜单列表 -->
+          <el-submenu :index="''+ item.id" v-for="(item,index) in menus" :key="index">
             <template slot="title">
-              <i class="el-icon-user"></i>
-              <span>用户管理</span>
+              <i class="el-icon-add-location"></i>
+              <span>{{item.name}}</span>
             </template>
-              <el-menu-item index="users">
-                <i class="el-icon-ticketsn"></i>用户列表
-              </el-menu-item>
-          </el-submenu>
-          <!-- 2 -->
-          <el-submenu index="2">
-            <template slot="title">
-              <i class="el-icon-key"></i>
-              <span>权限管理</span>
-            </template>
-              <el-menu-item index="roleList">
-                <i class="el-icon-menu"></i>角色列表
-              </el-menu-item>
-              <el-menu-item index="authList">
-                <i class="el-icon-menu"></i>权限列表
-              </el-menu-item>
-          </el-submenu>
-          <!-- 3 -->
-          <el-submenu index="3">
-            <template slot="title">
-              <i class="el-icon-shopping-cart-2"></i>
-              <span>商品管理</span>
-            </template>
-              <el-menu-item index="3-1">
-                <i class="el-icon-sell"></i>商品列表
-              </el-menu-item>
-              <el-menu-item index="3-2">
-                <i class="el-icon-more-outline"></i>分类参数
-              </el-menu-item>
-              <el-menu-item index="3-3">
-                <i class="el-icon-s-grid"></i>商品分类
-              </el-menu-item>
-          </el-submenu>
-          <!-- 4 -->
-          <el-submenu index="4">
-            <template slot="title">
-              <i class="el-icon-s-claim"></i>
-              <span>订单管理</span>
-            </template>
-              <el-menu-item index="4-1">
-                <i class="el-icon-s-order"></i>订单列表
-              </el-menu-item>
-          </el-submenu>
-          <!-- 5 -->
-          <el-submenu index="5">
-            <template slot="title">
-              <i class="el-icon-s-data"></i>
-              <span>数据统计</span>
-            </template>
-              <el-menu-item index="5-1">
-                <i class="el-icon-s-data"></i>数据报表
+              <el-menu-item :index="item1.path" v-for="(item1,index) in item.children" :key="index">
+                <i class="el-icon-position"></i>{{item1.name}}
               </el-menu-item>
           </el-submenu>
         </el-menu>
@@ -94,7 +45,8 @@
 export default {
   data () {
     return {
-      name: ''
+      name: '',
+      menus: []
     }
   },
   mounted () {
@@ -107,7 +59,17 @@ export default {
     }
     // 如果有,继续渲染组件
   },
+  created () {
+    this.getMenus()
+  },
   methods: {
+    // 获取左侧导航栏列表
+    async getMenus () {
+      const res = await this.$http.get('/menus')
+      // console.log(res.data)
+      this.menus = res.data
+    },
+    // 用户退出
     quit () {
       // 退出时清除token
       localStorage.clear()
